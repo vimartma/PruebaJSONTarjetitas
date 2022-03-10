@@ -12,8 +12,8 @@ class CircuitoAdapter(val context: Context, val items: ArrayList<Circuito_Modelo
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        println("-------------------------")
-        println(items.size)
+        //println("-------------------------")
+        //println(items.size)
         return ViewHolder(
             LayoutInflater.from(context).inflate(
                 R.layout.circuito_layout,
@@ -26,8 +26,8 @@ class CircuitoAdapter(val context: Context, val items: ArrayList<Circuito_Modelo
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items.get(position)
         //La parte del holder. se corresponde al nombre dado en la clase de "ViewHolder" la del item. en la clase Circuito_modelo
-        println("-------------------------")
-        println(items.size)
+        //println("-------------------------")
+        //println(items.size)
         holder.nom_circ.text = item.nom_Cir.toString()
         holder.nom_pais.text = item.nom_Pais
         holder.nom_localidad.text = item.nom_Localidad

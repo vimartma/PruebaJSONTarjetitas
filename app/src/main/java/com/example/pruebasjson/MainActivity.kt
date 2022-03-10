@@ -6,7 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pruebasjson.Model.Circuito_Modelo
+import com.example.pruebasjson.obtenerCircuitos.CircuitosAPI
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
@@ -16,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        getCircuitosCall()
         // Instance of users list using the data model class.
         val circuitos: ArrayList<Circuito_Modelo> = ArrayList()
 
@@ -28,11 +33,10 @@ class MainActivity : AppCompatActivity() {
 
             val listaCircuitos = circuits1.getJSONArray("Circuits")
 
-            println("---------------")
-            println(listaCircuitos.length())
+//            println(listaCircuitos.length())
             for (i in 0 until listaCircuitos.length()) {
                 val circuito = listaCircuitos.getJSONObject(i)
-                println(circuito)
+                //println(circuito)
 
                 val id = circuito.getString("circuitId")
                 val nombre = circuito.getString("circuitName")
@@ -43,8 +47,7 @@ class MainActivity : AppCompatActivity() {
                 // Now add all the variables to the data model class and the data model class to the array list.
                 val userDetails =
                     Circuito_Modelo(nombre,pais,ciudad,"Aqui foto")
-                println("---------------")
-                println(nombre)
+
                 circuitos.add(userDetails)
             }
         } catch (e: JSONException) {
@@ -64,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         // That's all!
 
 
-        println("-------------------------222")
+        //println("-------------------------222")
     }
 
 
@@ -87,5 +90,14 @@ class MainActivity : AppCompatActivity() {
             return null
         }
         return json
+    }
+    private fun getCircuitosCall() {
+println("Llego aqui")
+        CoroutineScope(Dispatchers.IO).launch {
+            val listResult = CircuitosAPI.retrofitService.getPhotos()
+            println("------")
+            print(listResult)
+        }
+
     }
 }
